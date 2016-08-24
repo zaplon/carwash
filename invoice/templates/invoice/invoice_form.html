@@ -1,0 +1,38 @@
+{% extends 'create.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Nowa faktura{% endblock %}
+
+{% block content %}
+    <form method="post" action="">
+        {% crispy form %}
+        {% for formset in inlines %}
+            <div id="{{ formset.prefix }}">
+               {% crispy formset formset_helper %}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-4 offset-md-8">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr><td>Razem netto:</td><td></td></tr>
+                        <tr><td>VAT:</td><td></td></tr>
+                        <tr><td><strong>Razem brutto:</strong></td><td><strong></strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="controls" style="text-align: right">
+                <input type="submit" name="Zapisz" value="Zapisz" class="btn btn-primary btn-success"
+                                          id="submit-id-utworz">
+                <a href="../" class="btn btn-primary btn-danger" id="submit-id-anuluj">Anuluj</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block buttons %}
+
+{% endblock %}

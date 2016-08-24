@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title_block %}
+    <div class="jumbotron top-jumbotron">
+        <div class="container">
+            <h1 class="display-5">{{ object }}</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% block toolbar %}
+        <div class="toolbar">
+            <a class="btn btn-success" href="../edytuj/{{ object.id }}" role="button">Edytuj</a>
+            <a class="btn btn-danger" href="../usun/{{ object.id }}" role="button">Usuń</a>
+        </div>
+    {% endblock %}
+
+    {% block details %}
+
+    {% endblock %}
+
+    {% block return %}
+        <div class="return">
+            <a class="btn btn-default" href="{% url 'contractor-list' %}" role="button">Powrót</a>
+        </div>
+    {% endblock %}
+{% endblock %}

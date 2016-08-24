@@ -1,0 +1,23 @@
+#page-content {
+  margin-top: 0px; }
+
+.toolbar {
+  margin: 2rem 0; }
+
+.return {
+  margin: 2rem 0; }
+
+.empty-list {
+  text-align: center;
+  font-style: italic; }
+
+.top-jumbotron {
+  margin-top: 54px;
+  padding: 2rem 1rem; }
+
+.controls div {
+  text-align: right; }
+.controls input {
+  margin-left: 5px; }
+
+/*# sourceMappingURL=style.css.map */

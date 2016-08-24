@@ -1,0 +1,12 @@
+{% extends 'detail.html' %}
+
+{% block details %}
+    <table class="table table-striped">
+        <tbody>
+            <tr><td>Nazwa</td><td>{{ object.name }}</td></tr>
+            <tr><td>Kod</td><td>{{ object.code }}</td></tr>
+            <tr><td>Cena brutto</td><td>{{ object.price }}</td></tr>
+            <tr><td>Stawka VAT</td><td>{{ object.vat }}</td></tr>
+        </tbody>
+    </table>
+{% endblock %}

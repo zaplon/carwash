@@ -1,0 +1,25 @@
+{% extends 'list.html' %}
+
+{% block title %}Rachunki{% endblock %}
+
+{% block table %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Numer</th><th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td>{{ object.nr }}</td>
+                    <td>{{ object.date }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td class="empty-list" colspan="2">Brak wyników</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

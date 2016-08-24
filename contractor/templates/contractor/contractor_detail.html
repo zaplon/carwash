@@ -1,0 +1,14 @@
+{% extends 'detail.html' %}
+
+{% block details %}
+    <table class="table table-striped">
+        <tbody>
+            <tr><td>NIP</td><td>{{ object.nip }}</td></tr>
+            <tr><td>Nazwa</td><td>{{ object.name }}</td></tr>
+            <tr><td>Adres</td><td>{{ object.address }}</td></tr>
+            <tr><td>Kod pocztowy</td><td>{{ object.zipcode }}</td></tr>
+            <tr><td>Miejscowość</td><td>{{ object.city }}</td></tr>
+
+        </tbody>
+    </table>
+{% endblock %}

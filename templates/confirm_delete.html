@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block header %}{% endblock %}
+{% block content %}
+    <div class="alert alert-warning" role="alert">
+        <form action="" method="post">{% csrf_token %}
+            <p>Czy jesteś pewien, że chcesz usunąć "{{ object }}"?</p>
+            <input class="btn btn-danger" type="submit" value="Potwierdzam" />
+            <a class="btn btn-default" href="../../">Rozmyśliłem się</a>
+        </form>
+    </div>
+{% endblock %}

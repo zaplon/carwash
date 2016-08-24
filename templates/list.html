@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title_block %}
+    <div class="jumbotron top-jumbotron">
+      <div class="container">
+        <h1 class="display-5">{% block title %}{% endblock %}</h1>
+      </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% block toolbar %}
+        <div class="toolbar">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="sr-only" for="add-link">Dodaj</label>
+                    <a href="dodaj" class="btn btn-success" id="add-link">Dodaj</a>
+                </div>
+                <div style="text-align:right" class="col-md-8">
+                    <form class="form-inline pull-right" method="get" action="">
+                      <div class="form-group">
+                        <label class="sr-only" for="search">Szukaj</label>
+                        <input value="{{ query }}" type="text" name="query" class="form-control" id="search" placeholder="Szukaj">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Szukaj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block table %}
+
+    {% endblock %}
+
+    {% block pagination %}
+        {% if is_paginated %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                          <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Poprzednia">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Poprzednia</span>
+                          </a>
+                        </li>
+                    {% endif %}
+                     <li class="page-item">
+                         <a class="page-link" href="#">
+                         Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}
+                         </a>
+                     </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                          <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Następna">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Następna</span>
+                          </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    {% endblock %}
+
+{% endblock %}

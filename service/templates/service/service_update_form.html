@@ -1,0 +1,12 @@
+{% extends 'update.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+    {% crispy form %}
+{% endblock %}
+
+{% block buttons %}
+
+{% endblock %}

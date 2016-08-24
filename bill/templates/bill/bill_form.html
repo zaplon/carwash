@@ -1,0 +1,45 @@
+{% extends 'create.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Nowy rachunek{% endblock %}
+
+{% block content %}
+    <form method="post" action="">
+        {% crispy form %}
+        <div id="formsets">
+            {% for formset in inlines %}
+                <div id="{{ formset.prefix }}">
+                   {% crispy formset formset_helper %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-4 offset-md-8">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr><td>Razem netto:</td><td data-bind="text: totals.netto().toFixed(2)"></td></tr>
+                        <tr><td>VAT:</td><td data-bind="text: (totals.brutto() - totals.netto()).toFixed(2)"></td></tr>
+                        <tr><td><strong>Razem brutto:</strong></td><td><strong data-bind="text: totals.brutto().toFixed(2)"></strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="controls" style="text-align: right">
+                <input type="submit" name="Zapisz" value="Zapisz" class="btn btn-primary btn-success"
+                                          id="submit-id-utworz">
+                <a href="../" class="btn btn-primary btn-danger" id="submit-id-anuluj">Anuluj</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block buttons %}
+
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static "js/bill.js" %}"></script>
+{% endblock %}

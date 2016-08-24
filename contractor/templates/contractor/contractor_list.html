@@ -1,0 +1,30 @@
+{% extends 'list.html' %}
+
+{% block title %}
+    Kontrahenci
+{% endblock %}
+
+{% block table %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nip</th><th>Nazwa</th><th>Adres</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td><a href="{{ object.id }}">{{ object.nip }}</a></td>
+                    <td>{{ object.name }}</td>
+                    <td>{{ object.address }} {{ object.zipcode }} {{ object.city }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td class="empty-list" colspan="3">
+                        Brak wyników
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
