@@ -1,36 +1,23 @@
 from django.views.generic.list import ListView
 from django.utils import timezone
 from django.views.generic.detail import DetailView
-from .models import Bill
-from django.views.generic.edit import CreateView, UpdateView
+
+from .models import Bill, ServiceToBill
 from .forms import *
-from extra_views import InlineFormSet, CreateWithInlinesView
-from .models import ServiceToBill
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
 
 class BillListView(ListView):
-
     model = Bill
 
     def get_context_data(self, **kwargs):
         context = super(BillListView, self).get_context_data(**kwargs)
+        if self.request.GET.get('query', False):
+            context['query'] = self.request.GET['query']
         return context
 
 
-class ServicesInline(InlineFormSet):
-    model = ServiceToBill
-    fields = ['service', 'quantity', 'vat', 'price']
-    max_num = 20
-    extra = 3
-    can_delete = True
-
-    def __init__(self, *args, **kwargs):
-        super(ServicesInline, self).__init__(*args, **kwargs)
-        pass
-
-
 class BillDetailView(DetailView):
-
     model = Bill
 
     def get_context_data(self, **kwargs):
@@ -49,6 +36,12 @@ class BillCreate(CreateWithInlinesView):
         return context
 
 
-class BillUpdate(UpdateView):
+class BillUpdate(UpdateWithInlinesView):
     model = Bill
-    fields = ['date']
+    form_class = CreateForm
+    inlines = [ServicesInline]
+
+    def get_context_data(self, **kwargs):
+        context = super(BillCreate, self).get_context_data(**kwargs)
+        context['formset_helper'] = FormSetHelper()
+        return context

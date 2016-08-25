@@ -12,7 +12,7 @@
         <tbody>
             {% for object in object_list %}
                 <tr>
-                    <td>{{ object.nr }}</td>
+                    <td><a href="{{ object.id }}">{{ object.nr }}</a></td>
                     <td>{{ object.date }}</td>
                 </tr>
             {% empty %}

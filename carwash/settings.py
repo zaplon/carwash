@@ -135,6 +135,8 @@ TEMPLATES = [
         },
     },
 ]
+TEMPLATE_DEBUG = True
+TEMPLATES[0]['OPTIONS']['debug'] = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 USE_TZ = True

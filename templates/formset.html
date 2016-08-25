@@ -1,87 +1,29 @@
-{% load crispy_forms_tags %}
-{% load crispy_forms_utils %}
-{% load crispy_forms_field %}
-{% load formset_tags %}
-
-{% specialspaceless %}
-    {% if formset_tag %}
-        <form {{ flat_attrs|safe }} method="{{ form_method }}" {% if formset.is_multipart %}
-                                    enctype="multipart/form-data"{% endif %}>
-    {% endif %}
-{% if formset_method|lower == 'post' and not disable_csrf %}
-    {% csrf_token %}
+{% if form_show_errors and not form.is_extra %}
+    {% include "bootstrap3/errors.html" %}
 {% endif %}
 
-<div>
-    {{ formset.management_form|crispy }}
-</div>
-
-<table{% if form_id %} id="{{ form_id }}_table"{% endif %} class="table table-striped">
-    <thead>
-    {% if formset.readonly and not formset.queryset.exists %}
-    {% else %}
-        <tr>
-            {% for field in formset.forms.0 %}
-                {% if field.label and not field|is_checkbox and not field.is_hidden %}
-                    <th for="{{ field.auto_id }}"
-                        class="control-label {% if field.field.required %}requiredField{% endif %}">
-                        {{ field.label|safe }}{% if field.field.required %}
-                            <span class="asteriskField">*</span>{% endif %}
-                    </th>
+<tr>
+    {% for field in form %}
+        {% if field.name == 'price' %}
+            <td><span data-bind="text: services()[{{ form.number }}].price()"></span></td>
+                            {% elif field.name == 'vat' %}
+                                <td><span data-bind="text: services()[{{ form.number }}].vat()"></span></td>
+        {% elif field.name == 'quantity' %}
+            <td id="div_id_servicetobill_set-{{ form.number }}-quantity" class="form-group">
+                <div class="controls "><input class="numberinput form-control form-control"
+                                              data-bind="value: services()[{{ form.number }}].quantity"
+                                              id="{{ field.auto_id }}"
+                                              name="servicetobill_set-{{ form.number }}-quantity"
+                                              type="number" min="1"></div>
+            </td>
+        {% elif field.name == 'DELETE' %}
+            <td>
+                {% if form.number > 0 %}
+                    <button class="btn btn-default delete-form" type="button">Usuń</button>
                 {% endif %}
-            {% endfor %}
-            <th></th>
-        </tr>
-    {% endif %}
-    </thead>
-
-    <tbody>
-    {% for form in formset %}
-        {% if form_show_errors and not form.is_extra %}
-            {% include "bootstrap3/errors.html" %}
+            </td>
+        {% else %}
+            {% include 'bootstrap3/field.html' with tag="td" form_show_labels=False %}
         {% endif %}
-
-        <tr>
-            {% for field in form %}
-                {% if field.name == 'price' %}
-                    <td><span data-bind="text: services()[{{ forloop.parentloop.counter0 }}].price()"></span></td>
-                {% elif field.name == 'vat' %}
-                    <td><span data-bind="text: services()[{{ forloop.parentloop.counter0 }}].vat()"></span></td>
-                {% elif field.name == 'quantity' %}
-                    <td id="div_id_servicetobill_set-{{ forloop.parentloop.counter0 }}-quantity" class="form-group">
-                        <div class="controls "><input class="numberinput form-control form-control"
-                                                      data-bind="value: services()[{{ forloop.parentloop.counter0 }}].quantity"
-                                                      id="id_servicetobill_set-{{ forloop.parentloop.counter0 }}-quantity"
-                                                      name="servicetobill_set-{{ forloop.parentloop.counter0 }}-quantity"
-                                                      type="number" min="1"></div>
-                    </td>
-                {% elif field.name == 'DELETE' %}
-                    <td><button class="btn btn-default delete-form" type="button">Usuń</button></td>
-                {% else %}
-                    {% include 'bootstrap3/field.html' with tag="td" form_show_labels=False %}
-                {% endif %}
-            {% endfor %}
-        </tr>
     {% endfor %}
-    </tbody>
-</table>
-
- <!-- The empty form template. By wrapping this in a <script> tag, the
-__prefix__ placeholder can easily be replaced in both attributes and
-any scripts -->
-<script type="form-template" data-formset-empty-form>
-    {% escapescript %}
-        <div data-formset-form>
-            {{ formset.empty_form }}
-        </div>
-    {% endescapescript %}
-</script>
-
-<div class="form-group">
-    <button id="add-formset" class="btn btn-default">Dodaj</button>
-</div>
-
-{% include "bootstrap3/inputs.html" %}
-
-{% if formset_tag %}</form>{% endif %}
-{% endspecialspaceless %}
+</tr>

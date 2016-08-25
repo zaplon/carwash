@@ -1,0 +1,27 @@
+{% extends 'detail.html' %}
+
+{% block details %}
+    <table class="table table-striped">
+        <tbody>
+            <tr><td>Nr</td><td>{{ object.nr }}</td></tr>
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Usługa</th>
+                <th>Ilość</th>
+                <th>Cena brutto</th>
+                <th>Stawka VAT</th>
+            </tr>
+        </thead>
+        {% for service in object.servicetobill_set.all %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.quantity }}</td>
+                <td>{{ service.price }}</td>
+                <td>{{ service.vat }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

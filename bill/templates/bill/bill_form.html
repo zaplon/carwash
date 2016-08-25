@@ -7,13 +7,9 @@
 {% block content %}
     <form method="post" action="">
         {% crispy form %}
-        <div id="formsets">
-            {% for formset in inlines %}
-                <div id="{{ formset.prefix }}">
-                   {% crispy formset formset_helper %}
-                </div>
-            {% endfor %}
-        </div>
+        {% for inline in inlines %}
+            {% crispy inline formset_helper %}
+        {% endfor %}
         <div class="row">
             <div class="col-md-4 offset-md-8">
                 <table class="table table-striped">

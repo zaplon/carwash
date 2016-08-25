@@ -1,6 +1,9 @@
 from django.views.generic.list import ListView
 from django.utils import timezone
 from django.views.generic.detail import DetailView
+from extra_views import CreateWithInlinesView
+
+from invoice.views import ServicesInline
 from .models import Service
 from django.views.generic.edit import CreateView, UpdateView
 from .forms import CreateForm, UpdateForm
@@ -50,6 +53,10 @@ class ServiceDetailView(DetailView):
 class ServiceCreate(CreateView):
     model = Service
     form_class = CreateForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceCreate, self).get_context_data(**kwargs)
+        return context
 
 
 class ServiceUpdate(UpdateView):

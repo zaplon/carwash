@@ -1,12 +1,17 @@
 # encoding: utf-8
 from crispy_forms.layout import Layout, Field, Submit, HTML
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from django.forms.fields import DateField
+from extra_views import InlineFormSet
+
+from bill.models import ServiceToBill
+from invoice.models import ServiceToInvoice
 from .models import Service
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
 from django.conf import settings
 import datetime
+
 
 FORM_FIELDS = ['name', 'code', 'price', 'vat']
 
@@ -42,3 +47,15 @@ class UpdateForm(CreateForm):
                 Submit(u'Zapisz', u'Zapisz', css_class="btn-success"),
             )
         )
+
+
+class ServiceInlineForm(ModelForm):
+    fields = ['service', 'quantity', 'vat', 'price']
+
+    def __init__(self, *args, **kwargs):
+        super(ServiceInlineForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.template = 'formset.html'
+        self.number = self.prefix.split('-')[-1]
+        self.fields['vat'].widget.attrs['disabled'] = True
+

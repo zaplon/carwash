@@ -2,11 +2,14 @@
 from crispy_forms.layout import Layout, Field, Submit
 from django.forms import ModelForm
 from django.forms.fields import DateField
-from .models import Bill
+
+from service.forms import ServiceInlineForm
+from .models import Bill, ServiceToBill
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
 from django.conf import settings
 import datetime
+from extra_views import InlineFormSet
 
 
 class FormSetHelper(FormHelper):
@@ -14,9 +17,18 @@ class FormSetHelper(FormHelper):
         super(FormSetHelper, self).__init__(*args, **kwargs)
         self.form_method = 'post'
         self.render_required_fields = True
-        self.template = 'formset.html'
+        self.template = 'form_with_formsets.html'
         self.form_tag = False
         self.layout = Layout('service', 'quantity', 'price')
+
+
+class ServicesInline(InlineFormSet):
+    model = ServiceToBill
+    fields = ['service', 'quantity', 'price', 'vat']
+    form_class = ServiceInlineForm
+    max_num = 20
+    extra = 3
+    can_delete = True
 
 
 class CreateForm(ModelForm):
@@ -30,6 +42,7 @@ class CreateForm(ModelForm):
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'
+        self.helper.form_tag = False
         self.helper.layout = Layout(
             'nr', 'name',
         )
