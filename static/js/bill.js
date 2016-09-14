@@ -26,6 +26,8 @@ var totals = {
 ko.applyBindings({ services: services, totals: totals}); // document.getElementById('formsets')
 
 $('document').ready(function(){
+    var id = $('input[name=formset-id]').val()+"-TOTAL_FORMS";
+    var formsetsCount = $('input[name='+id+']');
     $('#formsets-body').delegate('select', 'change', function(event, target){
         if ($(this).val().length > 0) {
             var me = this;
@@ -37,11 +39,15 @@ $('document').ready(function(){
     });
     $('#formsets-body').delegate('.delete-form', 'click', function(event, target){
        $(this).parent().parent().remove();
+       formsetsCount.val(parseInt(formsetsCount.val()) - 1)
     });
     $('#add-new-formset').click(function(){
         services.push(service);
         var html = $("#formset-template").html().replace(/__prefix__/g, services().length-1);
+        //var html = html.replace(/1/g, (services().length-1));
+        //var html = html.replace(/"+services().length-1+"/g, '"1"');
         $("#formsets-body").append(html);
+        formsetsCount.val(parseInt(formsetsCount.val()) + 1);
         //ko.applyBindings({ services: services, totals: totals});
     });
 });

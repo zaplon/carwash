@@ -56,6 +56,9 @@ class ServiceInlineForm(ModelForm):
         super(ServiceInlineForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.template = 'formset.html'
-        self.number = self.prefix.split('-')[-1]
+        try:
+            self.number = int(self.prefix.split('-')[-1])
+        except:
+            self.number = "__prefix__"
         self.fields['vat'].widget.attrs['disabled'] = True
 

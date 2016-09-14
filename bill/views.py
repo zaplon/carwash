@@ -42,6 +42,6 @@ class BillUpdate(UpdateWithInlinesView):
     inlines = [ServicesInline]
 
     def get_context_data(self, **kwargs):
-        context = super(BillCreate, self).get_context_data(**kwargs)
+        context = super(BillUpdate, self).get_context_data(**kwargs)
         context['formset_helper'] = FormSetHelper()
         return context
